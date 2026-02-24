@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User, Briefcase, UserPlus, GraduationCap } from 'lucide-react';
 
