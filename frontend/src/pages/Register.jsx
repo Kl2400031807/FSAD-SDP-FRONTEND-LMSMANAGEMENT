@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User, Briefcase, UserPlus, GraduationCap } from 'lucide-react';
 
 const Register = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -21,7 +21,7 @@ const Register = () => {
 
         // Store fake user with selected role
         localStorage.setItem('user', JSON.stringify({ role: formData.role }));
-        window.location.href = `/${formData.role}`;
+        navigate(`/${formData.role}`);
     };
 
     return (

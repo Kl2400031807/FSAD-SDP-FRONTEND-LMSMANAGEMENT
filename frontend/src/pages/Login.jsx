@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, LogIn, GraduationCap } from 'lucide-react';
 
 const Login = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -24,7 +24,7 @@ const Login = () => {
         else if (formData.email.includes('creator')) role = 'creator';
 
         localStorage.setItem('user', JSON.stringify({ role }));
-        window.location.href = `/${role}`;
+        navigate(`/${role}`);
     };
 
     return (
