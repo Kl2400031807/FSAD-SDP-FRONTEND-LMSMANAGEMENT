@@ -8,8 +8,8 @@ const MOCK_COURSES = [
     { id: 2, title: 'Cloud Computing', description: 'Understand cloud models, virtualization, AWS basics, and scalable systems.', instructor: 'Dr. Radhika Sharma', studentEnrolled: true, instructorCreated: false, image: '/cloud.jpg' },
     { id: 3, title: 'Full Stack Web Development', description: 'Build complete web applications using frontend, backend, and databases.', instructor: 'Mr. Suresh Naidu', studentEnrolled: false, instructorCreated: true, image: '/fullstack.png' },
     { id: 4, title: 'Frontend Development', description: 'Learn HTML, CSS, JavaScript, and modern UI frameworks.', instructor: 'Ms. Priya Verma', studentEnrolled: true, instructorCreated: false, image: '/Frontend.png' },
-    { id: 5, title: 'Computer Networks', description: 'Learn OSI model, TCP/IP, routing, switching, and network security.', instructor: 'Prof. Ravi Teja', studentEnrolled: false, instructorCreated: true },
-    { id: 6, title: 'DevOps Engineering', description: 'Learn CI/CD, Docker, Kubernetes, monitoring, and automation.', instructor: 'Mr. Karthik Reddy', studentEnrolled: true, instructorCreated: true },
+    { id: 5, title: 'Computer Networks', description: 'Learn OSI model, TCP/IP, routing, switching, and network security.', instructor: 'Prof. Ravi Teja', studentEnrolled: false, instructorCreated: true, image: '/cn.jpg' },
+    { id: 6, title: 'DevOps Engineering', description: 'Learn CI/CD, Docker, Kubernetes, monitoring, and automation.', instructor: 'Mr. Karthik Reddy', studentEnrolled: true, instructorCreated: true, image: '/devops.png' },
 ];
 
 const MyCourses = () => {
