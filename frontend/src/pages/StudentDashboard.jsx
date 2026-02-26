@@ -1,13 +1,14 @@
 import React from 'react';
 import { BookOpen, Search, PieChart, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
 const StudentDashboard = () => {
     const menuItems = [
-        { title: 'Enrolled Courses', icon: BookOpen, desc: 'Pick up where you left off', iconColor: 'text-violet-600', bgColor: 'bg-violet-50' },
-        { title: 'Browse Catalog', icon: Search, desc: 'Explore new skills to master', iconColor: 'text-pink-600', bgColor: 'bg-pink-50' },
-        { title: 'Progress Tracker', icon: PieChart, desc: 'View your learning statistics', iconColor: 'text-teal-600', bgColor: 'bg-teal-50' },
-        { title: 'My Certificates', icon: Star, desc: 'Your earned achievements', iconColor: 'text-amber-600', bgColor: 'bg-amber-50' },
+        { title: 'Enrolled Courses', icon: BookOpen, desc: 'Pick up where you left off', iconColor: 'text-violet-600', bgColor: 'bg-violet-50', path: '/my-courses' },
+        { title: 'Browse Catalog', icon: Search, desc: 'Explore new skills to master', iconColor: 'text-pink-600', bgColor: 'bg-pink-50', path: '/courses' },
+        { title: 'Progress Tracker', icon: PieChart, desc: 'View your learning statistics', iconColor: 'text-teal-600', bgColor: 'bg-teal-50', path: '/progress' },
+        { title: 'My Certificates', icon: Star, desc: 'Your earned achievements', iconColor: 'text-amber-600', bgColor: 'bg-amber-50', path: '/certificates' },
     ];
 
     return (
@@ -20,13 +21,17 @@ const StudentDashboard = () => {
                 </header>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {menuItems.map((item, idx) => (
-                        <div key={idx} className="bg-white p-8 rounded-3xl border border-slate-200 hover:border-brand-primary hover:shadow-xl hover:shadow-slate-200/50 transition-all group cursor-pointer shadow-sm">
+                        <Link
+                            key={idx}
+                            to={item.path || '#'}
+                            className="block bg-white p-8 rounded-3xl border border-slate-200 hover:border-brand-primary hover:shadow-xl hover:shadow-slate-200/50 transition-all group cursor-pointer shadow-sm"
+                        >
                             <div className={`w-14 h-14 ${item.bgColor} rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform`}>
                                 <item.icon className={item.iconColor} size={28} />
                             </div>
                             <h3 className="text-xl font-bold mb-2 text-slate-900">{item.title}</h3>
                             <p className="text-slate-600 text-sm leading-relaxed font-medium">{item.desc}</p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

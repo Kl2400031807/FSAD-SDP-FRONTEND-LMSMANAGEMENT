@@ -16,6 +16,13 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // password length validation
+        if (formData.password.length < 6) {
+            alert('Password must be at least 6 characters long.');
+            return;
+        }
+
         console.log('Login Form Data:', formData);
 
         // Fake Authentication Logic
@@ -71,6 +78,7 @@ const Login = () => {
                                     value={formData.password}
                                     onChange={handleChange}
                                     placeholder="••••••••"
+                                    minLength={6}
                                     className="w-full bg-white border border-slate-200 rounded-2xl py-3.5 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all font-sans"
                                     required
                                 />

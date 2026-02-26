@@ -8,9 +8,9 @@ const MOCK_COURSES = [
     { id: 2, title: 'Cloud Computing', description: 'Understand cloud models, virtualization, AWS basics, and scalable systems.', instructor: 'Dr. Radhika Sharma', difficulty: 'Intermediate', duration: '5 Weeks', enrollments: '3.5k', category: 'Development', isNew: true, image: '/cloud.jpg' },
     { id: 3, title: 'Full Stack Web Development', description: 'Build complete web applications using frontend, backend, and databases.', instructor: 'Mr. Suresh Naidu', difficulty: 'Intermediate', duration: '8 Weeks', enrollments: '4.2k', category: 'Development', image: '/fullstack.png' },
     { id: 4, title: 'Frontend Development', description: 'Learn HTML, CSS, JavaScript, and modern UI frameworks.', instructor: 'Ms. Priya Verma', difficulty: 'Beginner', duration: '6 Weeks', enrollments: '5.0k', category: 'Development', image: '/Frontend.png' },
-    { id: 5, title: 'Computer Networks', description: 'Learn OSI model, TCP/IP, routing, switching, and network security.', instructor: 'Prof. Ravi Teja', difficulty: 'Intermediate', duration: '5 Weeks', enrollments: '1.9k', category: 'Development' },
-    { id: 6, title: 'DevOps Engineering', description: 'Learn CI/CD, Docker, Kubernetes, monitoring, and automation.', instructor: 'Mr. Karthik Reddy', difficulty: 'Advanced', duration: '7 Weeks', enrollments: '2.3k', category: 'Development' },
-    { id: 7, title: 'Artificial Intelligence', description: 'Introduction to AI concepts, machine learning basics, and real-world applications.', instructor: 'Dr. Neha Agarwal', difficulty: 'Advanced', duration: '8 Weeks', enrollments: '3.1k', category: 'Development' },
+    { id: 5, title: 'Computer Networks', description: 'Learn OSI model, TCP/IP, routing, switching, and network security.', instructor: 'Prof. Ravi Teja', difficulty: 'Intermediate', duration: '5 Weeks', enrollments: '1.9k', category: 'Development', image: '/cn.jpg' },
+    { id: 6, title: 'DevOps Engineering', description: 'Learn CI/CD, Docker, Kubernetes, monitoring, and automation.', instructor: 'Mr. Karthik Reddy', difficulty: 'Advanced', duration: '7 Weeks', enrollments: '2.3k', category: 'Development', image: '/devops.png' },
+    { id: 7, title: 'Artificial Intelligence', description: 'Introduction to AI concepts, machine learning basics, and real-world applications.', instructor: 'Dr. Neha Agarwal', difficulty: 'Advanced', duration: '8 Weeks', enrollments: '3.1k', category: 'Development', image: '/ai.jpg' },
 ];
 
 const SkeletonCard = () => (
