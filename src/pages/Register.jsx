@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User, Briefcase, UserPlus, GraduationCap } from 'lucide-react';
 
+import { registerUser } from '../data/users';
+
 const Register = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -10,19 +12,24 @@ const Register = () => {
         password: '',
         role: 'student',
     });
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+        setError('');
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Register Form Data:', formData);
-
-        // Store fake user with selected role
-        localStorage.setItem('user', JSON.stringify({ role: formData.role }));
-        navigate(`/${formData.role}`);
+        const result = registerUser(formData);
+        
+        if (result.success) {
+            alert('Your account has been securely provisioned! Please sign in with your credentials.');
+            navigate('/login');
+        } else {
+            setError(result.message);
+        }
     };
 
     return (
@@ -40,6 +47,12 @@ const Register = () => {
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Create Account</h2>
                         <p className="text-slate-500 mt-2 text-center font-medium">Join our professional learning community</p>
                     </div>
+
+                    {error && (
+                        <div className="mb-6 p-4 bg-rose-50 border border-rose-100 text-rose-600 text-sm font-bold rounded-2xl flex items-center gap-2 animate-in fade-in zoom-in duration-300">
+                             <Lock size={16} /> {error}
+                        </div>
+                    )}
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div className="space-y-1.5">

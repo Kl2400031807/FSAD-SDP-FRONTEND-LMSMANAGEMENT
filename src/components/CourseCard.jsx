@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, User, CheckCircle, Edit, PlayCircle, Clock, Users, Signal } from 'lucide-react';
+import { BookOpen, User, CheckCircle, Edit, PlayCircle, Clock, Users, Signal, RotateCcw } from 'lucide-react';
 
 const CourseCard = ({ course, role, onAction }) => {
     // Helper for difficulty colors
@@ -15,7 +15,23 @@ const CourseCard = ({ course, role, onAction }) => {
     const getRoleActions = () => {
         switch (role) {
             case 'student':
-                return (
+                if (course.isCompleted) {
+                    return (
+                        <div className="w-full py-3 text-sm font-black text-brand-primary bg-brand-primary/5 rounded-xl border border-brand-primary/20 flex items-center justify-center gap-2 shadow-sm">
+                            <CheckCircle size={18} />
+                            Curriculum Mastered
+                        </div>
+                    );
+                }
+                return course.studentEnrolled ? (
+                    <button
+                        onClick={() => onAction('complete', course.id)}
+                        className="btn-primary w-full py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-primary/20 hover:scale-[1.02] active:scale-95 transition-all bg-brand-accent border-brand-accent"
+                    >
+                        <CheckCircle size={18} />
+                        Finalize Course
+                    </button>
+                ) : (
                     <button
                         onClick={() => onAction('enroll', course.id)}
                         className="btn-primary w-full py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
@@ -35,20 +51,42 @@ const CourseCard = ({ course, role, onAction }) => {
                     </button>
                 );
             case 'admin':
+                if (course.isDeleted) {
+                    return (
+                        <button
+                            onClick={() => onAction('restore', course.id)}
+                            className="w-full py-3 text-sm font-black rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 hover:bg-indigo-600 hover:text-white transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2"
+                        >
+                            <RotateCcw size={18} />
+                            Restore Curriculum
+                        </button>
+                    );
+                }
                 return (
-                    <div className="flex gap-3 w-full">
-                        <button
-                            onClick={() => onAction('approve', course.id)}
-                            className="flex-1 py-3 text-sm font-black rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-all shadow-sm active:scale-95"
-                        >
-                            Approve
-                        </button>
-                        <button
-                            onClick={() => onAction('delete', course.id)}
-                            className="flex-1 py-3 text-sm font-black rounded-xl bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-600 hover:text-white transition-all shadow-sm active:scale-95"
-                        >
-                            Delete
-                        </button>
+                    <div className="flex flex-col gap-3 w-full">
+                        <div className="flex gap-3">
+                            {course.status === 'Approved' ? (
+                                <button
+                                    onClick={() => onAction('revert', course.id)}
+                                    className="flex-1 py-3 text-sm font-black rounded-xl bg-amber-50 text-amber-600 border border-amber-100 hover:bg-amber-600 hover:text-white transition-all shadow-sm active:scale-95"
+                                >
+                                    Revert
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() => onAction('approve', course.id)}
+                                    className="flex-1 py-3 text-sm font-black rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-all shadow-sm active:scale-95"
+                                >
+                                    Approve
+                                </button>
+                            )}
+                            <button
+                                onClick={() => onAction('delete', course.id)}
+                                className="flex-1 py-3 text-sm font-black rounded-xl bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-600 hover:text-white transition-all shadow-sm active:scale-95"
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 );
             case 'creator':
@@ -91,6 +129,15 @@ const CourseCard = ({ course, role, onAction }) => {
 
                 {/* Badges Overlay */}
                 <div className="absolute top-3 left-3 flex flex-col gap-2">
+                    {course.status && (
+                        <div className={`px-2.5 py-1 rounded-lg backdrop-blur-md border text-[10px] font-black uppercase tracking-widest ${
+                            course.status === 'Approved' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-400/30' : 
+                            course.status === 'Pending' ? 'bg-amber-500/20 text-amber-400 border-amber-400/30' : 
+                            'bg-rose-500/20 text-rose-400 border-rose-400/30'
+                        }`}>
+                            {course.status}
+                        </div>
+                    )}
                     <div className={`px-2.5 py-1 rounded-lg backdrop-blur-md border text-[10px] font-black uppercase tracking-widest ${getDifficultyColor(course.difficulty || 'Beginner')}`}>
                         {course.difficulty || 'Beginner'}
                     </div>

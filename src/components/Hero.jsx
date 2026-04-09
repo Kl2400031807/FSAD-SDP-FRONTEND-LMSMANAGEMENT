@@ -1,5 +1,5 @@
-import React from 'react';
-import { Play, ArrowRight, ShieldCheck, Users, Trophy } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ShieldCheck, Users, Trophy } from 'lucide-react';
 
 const Hero = () => {
     return (
@@ -26,16 +26,10 @@ const Hero = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-                        <button className="btn-primary flex items-center gap-2 group">
+                        <Link to="/login" className="btn-primary flex items-center gap-2 group">
                             Get Started Today
                             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                        </button>
-                        <button className="btn-secondary flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center">
-                                <Play size={16} className="text-brand-primary fill-current" />
-                            </div>
-                            Watch Demo
-                        </button>
+                        </Link>
                     </div>
 
                     {/* Trust stats */}

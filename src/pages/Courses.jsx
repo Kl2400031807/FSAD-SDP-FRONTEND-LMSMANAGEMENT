@@ -3,15 +3,8 @@ import Navbar from '../components/Navbar';
 import CourseCard from '../components/CourseCard';
 import { Search, Filter, ChevronDown, Rocket, LayoutGrid } from 'lucide-react';
 
-const MOCK_COURSES = [
-    { id: 1, title: 'Database Management Systems (DBMS)', description: 'Learn relational databases, SQL, normalization, indexing, and transactions.', instructor: 'Prof. Anil Kumar', difficulty: 'Beginner', duration: '6 Weeks', enrollments: '2.8k', category: 'Development', isNew: true, image: '/dbms.jpg' },
-    { id: 2, title: 'Cloud Computing', description: 'Understand cloud models, virtualization, AWS basics, and scalable systems.', instructor: 'Dr. Radhika Sharma', difficulty: 'Intermediate', duration: '5 Weeks', enrollments: '3.5k', category: 'Development', isNew: true, image: '/cloud.jpg' },
-    { id: 3, title: 'Full Stack Web Development', description: 'Build complete web applications using frontend, backend, and databases.', instructor: 'Mr. Suresh Naidu', difficulty: 'Intermediate', duration: '8 Weeks', enrollments: '4.2k', category: 'Development', image: '/fullstack.png' },
-    { id: 4, title: 'Frontend Development', description: 'Learn HTML, CSS, JavaScript, and modern UI frameworks.', instructor: 'Ms. Priya Verma', difficulty: 'Beginner', duration: '6 Weeks', enrollments: '5.0k', category: 'Development', image: '/Frontend.png' },
-    { id: 5, title: 'Computer Networks', description: 'Learn OSI model, TCP/IP, routing, switching, and network security.', instructor: 'Prof. Ravi Teja', difficulty: 'Intermediate', duration: '5 Weeks', enrollments: '1.9k', category: 'Development', image: '/cn.jpg' },
-    { id: 6, title: 'DevOps Engineering', description: 'Learn CI/CD, Docker, Kubernetes, monitoring, and automation.', instructor: 'Mr. Karthik Reddy', difficulty: 'Advanced', duration: '7 Weeks', enrollments: '2.3k', category: 'Development', image: '/devops.png' },
-    { id: 7, title: 'Artificial Intelligence', description: 'Introduction to AI concepts, machine learning basics, and real-world applications.', instructor: 'Dr. Neha Agarwal', difficulty: 'Advanced', duration: '8 Weeks', enrollments: '3.1k', category: 'Development', image: '/ai.jpg' },
-];
+import { getCourses, enrollInCourse } from '../data/courses';
+import { useNavigate } from 'react-router-dom';
 
 const SkeletonCard = () => (
     <div className="bg-white p-4 rounded-[32px] border border-slate-100 animate-pulse">
@@ -28,6 +21,8 @@ const SkeletonCard = () => (
 );
 
 const Courses = () => {
+    const navigate = useNavigate();
+    const [courses, setCourses] = useState([]);
     const [role, setRole] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('All');
@@ -35,6 +30,13 @@ const Courses = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        const fetchCourses = () => {
+            const data = getCourses();
+            setCourses(data);
+            setIsLoading(false);
+        };
+        fetchCourses();
+
         const userStr = localStorage.getItem('user');
         if (userStr) {
             try {
@@ -44,17 +46,23 @@ const Courses = () => {
                 setRole(null);
             }
         }
-
-        // Simulating loading state
-        const timer = setTimeout(() => setIsLoading(false), 1200);
-        return () => clearTimeout(timer);
     }, []);
 
     const handleAction = (action, courseId) => {
+        if (action === 'enroll') {
+            enrollInCourse(courseId);
+            setCourses(getCourses());
+            alert('Success! You have enrolled in this course.');
+            navigate('/my-courses');
+        } else if (action === 'complete') {
+            markCourseCompleted(courseId);
+            setCourses(getCourses());
+            alert('Success! Course marked as completed.');
+        }
         console.log(`Action: ${action} on Course ID: ${courseId}`);
     };
 
-    const filteredCourses = MOCK_COURSES.filter(course => {
+    const filteredCourses = courses.filter(course => {
         const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             course.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = categoryFilter === 'All' || course.category === categoryFilter;

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Target, Award, BookOpen, Clock, TrendingUp } from 'lucide-react';
+import { getAssignments } from '../data/assignments';
 
 const Progress = () => {
     const [user, setUser] = useState(null);
-
+    const [assignments, setAssignments] = useState([]);
+ 
     useEffect(() => {
         const userStr = localStorage.getItem('user');
         if (userStr) {
@@ -14,14 +16,34 @@ const Progress = () => {
                 setUser(null);
             }
         }
+        setAssignments(getAssignments());
     }, []);
+ 
+    // Dynamically calculate progress data from assignments
+    const coursesMap = assignments.reduce((acc, a) => {
+        if (!acc[a.course]) {
+            acc[a.course] = { title: a.course, total: 0, completed: 0, grades: [] };
+        }
+        acc[a.course].total += 1;
+        if (a.status === 'Completed' || a.status === 'Submitted' || a.status === 'Graded') {
+            acc[a.course].completed += 1;
+        }
+        if (a.grade) {
+            const numericGrade = parseFloat(a.grade.replace('%', ''));
+            if (!isNaN(numericGrade)) acc[a.course].grades.push(numericGrade);
+        }
+        return acc;
+    }, {});
 
-    const progressData = [
-        { course: 'Database Management Systems (DBMS)', completion: 75, assignments: '3/4', grade: '92%' },
-        { course: 'Cloud Computing', completion: 40, assignments: '2/5', grade: '88%' },
-        { course: 'Computer Networks', completion: 100, assignments: '6/6', grade: '95%' },
-        { course: 'Frontend Development', completion: 15, assignments: '1/8', grade: 'N/A' },
-    ];
+    const progressData = Object.values(coursesMap).map(c => ({
+        course: c.title,
+        completion: Math.round((c.completed / c.total) * 100),
+        assignments: `${c.completed}/${c.total}`,
+        grade: c.grades.length > 0 ? `${Math.round(c.grades.reduce((s, g) => s + g, 0) / c.grades.length)}%` : 'N/A'
+    }));
+
+    const avgGPA = progressData.length > 0 ? Math.round(progressData.reduce((s, d) => s + (d.grade !== 'N/A' ? parseInt(d.grade) : 0), 0) / (progressData.filter(d => d.grade !== 'N/A').length || 1)) : 0;
+    const graduatedCount = progressData.filter(d => d.completion === 100).length;
 
     return (
         <div className="min-h-screen bg-surface-50 pt-32 pb-12 px-6">
@@ -36,7 +58,7 @@ const Progress = () => {
                         </div>
                         <div>
                             <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Graduation Rate</p>
-                            <h3 className="text-3xl font-black text-slate-900">1 / 4</h3>
+                            <h3 className="text-3xl font-black text-slate-900">{graduatedCount} / {progressData.length || 0}</h3>
                         </div>
                     </div>
                     <div className="bg-white p-8 rounded-[35px] border border-slate-200 flex items-center gap-6 shadow-sm">
@@ -54,7 +76,7 @@ const Progress = () => {
                         </div>
                         <div>
                             <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Portfolio GPA</p>
-                            <h3 className="text-3xl font-black text-slate-900">91.6%</h3>
+                            <h3 className="text-3xl font-black text-slate-900">{avgGPA}%</h3>
                         </div>
                     </div>
                 </div>

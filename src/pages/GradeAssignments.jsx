@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { Table, User, MessageCircle, Save, ArrowLeft, Star, FileText, CheckCircle2, AlertCircle, Loader2, ChevronRight } from 'lucide-react';
+import { gradeAssignment, getAssignments, getSubmissions, updateSubmissionStatus } from '../data/assignments';
 
 const MOCK_SUBMISSIONS = [
     { id: 1, student: 'Alex Johnson', date: '2026-02-22', file: 'hooks_homework.pdf', status: 'Pending', size: '1.2MB' },
@@ -17,6 +18,11 @@ const GradeAssignments = () => {
     const [gradeData, setGradeData] = useState({ grade: '', feedback: '' });
     const [isSaving, setIsSaving] = useState(false);
     const [validationError, setValidationError] = useState('');
+    const [submissions, setSubmissions] = useState([]);
+
+    useEffect(() => {
+        setSubmissions(getSubmissions(assignmentId));
+    }, [assignmentId]);
 
     const handleGradeChange = (e) => {
         const value = e.target.value;
@@ -33,11 +39,17 @@ const GradeAssignments = () => {
         if (validationError) return;
 
         setIsSaving(true);
-        // Simulate API call
+        // Persist grade to localStorage
         setTimeout(() => {
-            console.log('Grade Saved:', { ...gradeData, submissionId: selectedSubmission.id });
+            gradeAssignment(assignmentId, `${gradeData.grade}%`);
+            updateSubmissionStatus(selectedSubmission.id, 'Graded');
+            
+            // Re-fetch submissions to update the table status immediately
+            setSubmissions(getSubmissions(assignmentId));
+            
+            console.log('Grade Saved:', { ...gradeData, submissionId: selectedSubmission.id, assignmentId: assignmentId });
             setIsSaving(false);
-            alert(`Assessment finalized for ${selectedSubmission.student}`);
+            alert(`Assessment finalized for ${selectedSubmission.student}. Score: ${gradeData.grade}%`);
             setSelectedSubmission(null);
             setGradeData({ grade: '', feedback: '' });
         }, 1200);
@@ -77,7 +89,7 @@ const GradeAssignments = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
-                                    {MOCK_SUBMISSIONS.map((sub) => (
+                                    {submissions.map((sub) => (
                                         <tr
                                             key={sub.id}
                                             className={`hover:bg-slate-50/80 transition-all duration-300 group cursor-pointer ${selectedSubmission?.id === sub.id ? 'bg-brand-primary/[0.02]' : ''}`}
