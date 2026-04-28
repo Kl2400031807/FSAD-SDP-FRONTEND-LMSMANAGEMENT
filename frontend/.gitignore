@@ -1,0 +1,22 @@
+# Node
+node_modules/
+dist/
+
+# Java / Spring
+target/
+*.class
+
+# Environment
+.env
+
+# OS / IDE
+.vscode/
+.idea/
+.metadata/
+$RECYCLE.BIN/
+System Volume Information/
+WindowsApps/
+
+# Archives
+*.zip
+*.exe
