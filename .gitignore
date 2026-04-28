@@ -1,1 +1,26 @@
+<<<<<<< HEAD
 /.metadata/
+=======
+# Node
+node_modules/
+dist/
+
+# Java / Spring
+target/
+*.class
+
+# Environment
+.env
+
+# OS / IDE
+.vscode/
+.idea/
+.metadata/
+$RECYCLE.BIN/
+System Volume Information/
+WindowsApps/
+
+# Archives
+*.zip
+*.exe
+>>>>>>> 910be0addb9479a3d9f6beebb731e206757f0ba9
