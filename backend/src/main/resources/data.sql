@@ -1,0 +1,14 @@
+-- Sample course data for LMS
+INSERT INTO courses (title, description, instructor_name, difficulty, duration, enrollments, category, is_new, image, owner_email) VALUES
+('Database Management Systems (DBMS)', 'Learn relational databases, SQL, normalization, indexing, and transactions.', 'Prof. Anil Kumar', 'Beginner', '6 Weeks', '2.8k', 'Development', true, '/dbms.jpg', 'anil.kumar@university.edu'),
+('Cloud Computing', 'Understand cloud models, virtualization, AWS basics, and scalable systems.', 'Dr. Radhika Sharma', 'Intermediate', '5 Weeks', '3.5k', 'Development', true, '/cloud.jpg', 'radhika.sharma@university.edu'),
+('Full Stack Web Development', 'Build complete web applications using frontend, backend, and databases.', 'Mr. Suresh Naidu', 'Intermediate', '8 Weeks', '4.2k', 'Development', false, '/fullstack.png', 'suresh.naidu@university.edu'),
+('Frontend Development', 'Learn HTML, CSS, JavaScript, and modern UI frameworks.', 'Ms. Priya Verma', 'Beginner', '6 Weeks', '5.0k', 'Development', false, '/Frontend.png', 'priya.verma@university.edu'),
+('Computer Networks', 'Learn OSI model, TCP/IP, routing, switching, and network security.', 'Prof. Ravi Teja', 'Intermediate', '5 Weeks', '1.9k', 'Development', false, '/cn.jpg', 'ravi.teja@university.edu'),
+('DevOps Engineering', 'Learn CI/CD, Docker, Kubernetes, monitoring, and automation.', 'Mr. Karthik Reddy', 'Advanced', '7 Weeks', '2.3k', 'Development', false, '/devops.png', 'karthik.reddy@university.edu'),
+('Artificial Intelligence', 'Introduction to AI concepts, machine learning basics, and real-world applications.', 'Dr. Neha Agarwal', 'Advanced', '8 Weeks', '3.1k', 'Development', false, '/ai.jpg', 'neha.agarwal@university.edu'),
+('Data Structures & Algorithms', 'Master fundamental data structures and algorithms for efficient programming.', 'Prof. Vikram Singh', 'Intermediate', '10 Weeks', '4.7k', 'Development', false, '/dsa.jpg', 'vikram.singh@university.edu'),
+('Cybersecurity Fundamentals', 'Learn network security, cryptography, ethical hacking, and security best practices.', 'Dr. Meera Patel', 'Intermediate', '6 Weeks', '2.1k', 'Security', false, '/cybersecurity.jpg', 'meera.patel@university.edu'),
+('Mobile App Development', 'Build native and cross-platform mobile applications using React Native.', 'Mr. Arjun Kumar', 'Intermediate', '8 Weeks', '3.8k', 'Development', true, '/mobile.jpg', 'arjun.kumar@university.edu'),
+('Machine Learning with Python', 'Learn ML algorithms, data preprocessing, model training, and deployment.', 'Dr. Priya Sharma', 'Advanced', '12 Weeks', '2.9k', 'Data Science', false, '/ml.jpg', 'priya.sharma@university.edu'),
+('UI/UX Design Principles', 'Master user interface and user experience design for digital products.', 'Ms. Anjali Gupta', 'Beginner', '4 Weeks', '3.2k', 'Design', false, '/uiux.jpg', 'anjali.gupta@university.edu');
