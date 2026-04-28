@@ -1,9 +1,0 @@
-com\lms\entity\User.class
-com\lms\entity\Assignment.class
-com\lms\dto\LoginRequest.class
-com\lms\config\DataInitializer.class
-com\lms\repository\UserRepository.class
-com\lms\repository\SubmissionRepository.class
-com\lms\LmsApplication.class
-com\lms\controller\SubmissionController.class
-com\lms\entity\Submission.class
